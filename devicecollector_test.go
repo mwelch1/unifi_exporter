@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/mwelch1/unifi"
+	"github.com/mdlayher/unifi"
 )
 
 func TestDeviceCollector(t *testing.T) {
@@ -28,17 +28,12 @@ func TestDeviceCollector(t *testing.T) {
 			"ethernet_table": [{
 				"mac": "de:ad:be:ef:de:ad"
 			}],
-			"radio_table_stats": [{
-					"guest-num_sta": 1,
-					"name": "wifi0",
-					"num_sta": 3,
-					"user-num_sta": 2
-				}, {
-					"guest-num_sta": 2,
-					"name": "wifi1",
-					"num_sta": 6,
-					"user-num_sta": 4
-			}],
+			"ng-num_sta": 3,
+			"ng-user-num_sta": 2,
+			"ng-guest-num_sta": 1,
+			"na-num_sta": 6,
+			"na-user-num_sta": 4,
+			"na-guest-num_sta": 2,
 			"radio_table": [
 				{
 					"name": "wifi0",
@@ -103,101 +98,91 @@ func TestDeviceCollector(t *testing.T) {
 		{
 			desc: "two devices, one site",
 			input: strings.TrimSpace(`
+{
+	"data": [
 		{
-			"data": [
+			"_id": "abc",
+			"adopted": true,
+			"inform_ip": "192.168.1.1",
+			"name": "ABC",
+			"ethernet_table": [{
+				"mac": "de:ad:be:ef:de:ad"
+			}],
+			"ng-num_sta": 3,
+			"ng-user-num_sta": 2,
+			"ng-guest-num_sta": 1,
+			"na-num_sta": 6,
+			"na-user-num_sta": 4,
+			"na-guest-num_sta": 2,
+			"radio_table": [
 				{
-					"_id": "abc",
-					"adopted": true,
-					"inform_ip": "192.168.1.1",
-					"name": "ABC",
-					"ethernet_table": [{
-						"mac": "de:ad:be:ef:de:ad"
-					}],
-					"radio_table_stats": [{
-						"guest-num_sta": 1,
-						"name": "wifi0",
-						"num_sta": 3,
-						"user-num_sta": 2
-					}, {
-						"guest-num_sta": 2,
-						"name": "wifi1",
-						"num_sta": 6,
-						"user-num_sta": 4
-					}],
-					"radio_table": [
-						{
-							"name": "wifi0",
-							"radio": "ng"
-						},
-						{
-							"name": "wifi1",
-							"radio": "na"
-						}
-					],
-					"stat": {
-						"bytes": 100,
-						"rx_bytes": 80,
-						"tx_bytes": 20,
-						"rx_packets": 4,
-						"tx_packets": 1,
-						"tx_dropped": 1
-					},
-					"uplink": {
-						"rx_bytes": 20,
-						"tx_bytes": 10,
-						"rx_packets": 2,
-						"tx_packets": 1
-					},
-					"uptime": 10
+					"name": "wifi0",
+					"radio": "ng"
 				},
 				{
-					"_id": "def",
-					"adopted": false,
-					"inform_ip": "192.168.1.1",
-					"name": "DEF",
-					"ethernet_table": [{
-						"mac": "ab:ad:1d:ea:ab:ad"
-					}],
-					"radio_table_stats": [{
-						"guest-num_sta": 1,
-						"name": "wifi0",
-						"num_sta": 3,
-						"user-num_sta": 2
-					}, {
-						"guest-num_sta": 2,
-						"name": "wifi1",
-						"num_sta": 6,
-						"user-num_sta": 4
-					}],
-					"radio_table": [
-						{
-							"name": "wifi0",
-							"radio": "ng"
-						},
-						{
-							"name": "wifi1",
-							"radio": "na"
-						}
-					],
-					"stat": {
-						"bytes": 200,
-						"rx_bytes": 10,
-						"tx_bytes": 190,
-						"rx_packets": 1,
-						"tx_packets": 19,
-						"tx_dropped": 1
-					},
-					"uplink": {
-						"rx_bytes": 40,
-						"tx_bytes": 20,
-						"rx_packets": 4,
-						"tx_packets": 2
-					},
-					"uptime": 20
+					"name": "wifi1",
+					"radio": "na"
 				}
-			]
+			],
+			"stat": {
+				"bytes": 100,
+				"rx_bytes": 80,
+				"tx_bytes": 20,
+				"rx_packets": 4,
+				"tx_packets": 1,
+				"tx_dropped": 1
+			},
+			"uplink": {
+				"rx_bytes": 20,
+				"tx_bytes": 10,
+				"rx_packets": 2,
+				"tx_packets": 1
+			},
+			"uptime": 10
+		},
+		{
+			"_id": "def",
+			"adopted": false,
+			"inform_ip": "192.168.1.1",
+			"name": "DEF",
+			"ethernet_table": [{
+				"mac": "ab:ad:1d:ea:ab:ad"
+			}],
+			"ng-num_sta": 3,
+			"ng-user-num_sta": 2,
+			"ng-guest-num_sta": 1,
+			"na-num_sta": 6,
+			"na-user-num_sta": 4,
+			"na-guest-num_sta": 2,
+			"radio_table": [
+				{
+					"name": "wifi0",
+					"radio": "ng"
+				},
+				{
+					"name": "wifi1",
+					"radio": "na"
+				}
+			],
+			"stat": {
+				"bytes": 200,
+				"rx_bytes": 10,
+				"tx_bytes": 190,
+				"rx_packets": 1,
+				"tx_packets": 19,
+				"tx_dropped": 1
+			},
+			"uplink": {
+				"rx_bytes": 40,
+				"tx_bytes": 20,
+				"rx_packets": 4,
+				"tx_packets": 2
+			},
+			"uptime": 20
 		}
-		`),
+	]
+}
+`),
 			matches: []*regexp.Regexp{
 				regexp.MustCompile(`unifi_devices{site="Default"} 2`),
 				regexp.MustCompile(`unifi_devices_adopted{site="Default"} 1`),
@@ -255,56 +240,51 @@ func TestDeviceCollector(t *testing.T) {
 		{
 			desc: "two devices, two sites (same device, but this is okay for tests)",
 			input: strings.TrimSpace(`
+{
+	"data": [
 		{
-			"data": [
+			"_id": "123",
+			"adopted": true,
+			"inform_ip": "192.168.1.1",
+			"name": "OneTwoThree",
+			"ethernet_table": [{
+				"mac": "ab:ad:1d:ea:ab:ad"
+			}],
+			"ng-num_sta": 3,
+			"ng-user-num_sta": 2,
+			"ng-guest-num_sta": 1,
+			"na-num_sta": 6,
+			"na-user-num_sta": 4,
+			"na-guest-num_sta": 2,
+			"radio_table": [
 				{
-					"_id": "123",
-					"adopted": true,
-					"inform_ip": "192.168.1.1",
-					"name": "OneTwoThree",
-					"ethernet_table": [{
-						"mac": "ab:ad:1d:ea:ab:ad"
-					}],
-					"radio_table_stats": [{
-						"guest-num_sta": 1,
-						"name": "wifi0",
-						"num_sta": 3,
-						"user-num_sta": 2
-					}, {
-						"guest-num_sta": 2,
-						"name": "wifi1",
-						"num_sta": 6,
-						"user-num_sta": 4
-					}],
-					"radio_table": [
-						{
-							"name": "wifi0",
-							"radio": "ng"
-						},
-						{
-							"name": "wifi1",
-							"radio": "na"
-						}
-					],
-					"stat": {
-						"bytes": 100,
-						"rx_bytes": 80,
-						"tx_bytes": 20,
-						"rx_packets": 4,
-						"tx_packets": 1,
-						"tx_dropped": 1
-					},
-					"uplink": {
-						"rx_bytes": 20,
-						"tx_bytes": 10,
-						"rx_packets": 2,
-						"tx_packets": 1
-					},
-					"uptime": 10
+					"name": "wifi0",
+					"radio": "ng"
+				},
+				{
+					"name": "wifi1",
+					"radio": "na"
 				}
-			]
+			],
+			"stat": {
+				"bytes": 100,
+				"rx_bytes": 80,
+				"tx_bytes": 20,
+				"rx_packets": 4,
+				"tx_packets": 1,
+				"tx_dropped": 1
+			},
+			"uplink": {
+				"rx_bytes": 20,
+				"tx_bytes": 10,
+				"rx_packets": 2,
+				"tx_packets": 1
+			},
+			"uptime": 10
 		}
-		`),
+	]
+}
+`),
 			matches: []*regexp.Regexp{
 				regexp.MustCompile(`unifi_devices{site="Default"} 1`),
 				regexp.MustCompile(`unifi_devices_adopted{site="Default"} 1`),
@@ -380,7 +360,7 @@ func TestDeviceCollector(t *testing.T) {
 			t.Logf("\t[%02d:%02d] match: %s", i, j, m.String())
 
 			if !m.Match(out) {
-				t.Fatal("\toutput failed to match regex.")
+				t.Fatal("\toutput failed to match regex")
 			}
 		}
 	}
