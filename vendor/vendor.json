@@ -21,11 +21,10 @@
 			"revisionTime": "2016-04-24T11:30:07Z"
 		},
 		{
-			"checksumSHA1": "bKJwQVgvPfbz7a+ShHwwiZsc9qA=",
-			"path": "github.com/mdlayher/unifi",
-			"revision": "3b086eeb473780fc511fba75d749e20bcb8a17ea",
-			"revisionTime": "2017-08-05T18:17:15Z",
-			"tree": true
+			"checksumSHA1": "V26vhDdcO6VFjRCn0XVBcmI9KCM=",
+			"path": "github.com/mwelch1/unifi",
+			"revision": "be73af8d79222522f55b65b7dd5b917f16e5a0e9",
+			"revisionTime": "2018-06-04T18:03:05Z"
 		},
 		{
 			"checksumSHA1": "Ph+qmEo8RdBKBHZUhx0y5Oyk/U0=",
@@ -70,5 +69,5 @@
 			"revisionTime": "2017-08-12T16:00:11Z"
 		}
 	],
-	"rootPath": "github.com/mdlayher/unifi_exporter"
+	"rootPath": "github.com/mwelch1/unifi_exporter"
 }

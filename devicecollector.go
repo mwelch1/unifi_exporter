@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/mdlayher/unifi"
+	"github.com/mwelch1/unifi"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

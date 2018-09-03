@@ -12,8 +12,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mdlayher/unifi"
-	"github.com/mdlayher/unifi_exporter"
+	"github.com/mwelch1/unifi"
+	"github.com/mwelch1/unifi_exporter"
 	"github.com/prometheus/client_golang/prometheus"
 	"gopkg.in/yaml.v2"
 )
@@ -25,7 +25,7 @@ type Config struct {
 
 const (
 	// userAgent is ther user agent reported to the UniFi Controller API.
-	userAgent = "github.com/mdlayher/unifi_exporter"
+	userAgent = "github.com/mwelch1/unifi_exporter"
 )
 
 func main() {
@@ -57,7 +57,7 @@ func main() {
 		}
 	}
 
-	timeout := 5*time.Second
+	timeout := 5 * time.Second
 	if to, ok := config.Unifi["timeout"]; ok {
 		timeout, err = time.ParseDuration(to)
 		if err != nil {
